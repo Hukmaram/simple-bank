@@ -1,3 +1,4 @@
+DB_URL=postgresql://postgres:password@localhost:5432/simple_bank?sslmode=disable
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc test
 
 # Start PostgreSQL container
@@ -16,11 +17,11 @@ dropdb:
 
 # Run database migrations up
 migrateup:
-	migrate -path db/migration -database "postgresql://postgres:password@localhost:5432/simple_bank?sslmode=disable" -verbose up
+		migrate -path db/migration -database "$(DB_URL)" -verbose up
 
 # Run database migrations down
 migratedown:
-	migrate -path db/migration -database "postgresql://postgres:password@localhost:5432/simple_bank?sslmode=disable" -verbose down
+		migrate -path db/migration -database "$(DB_URL)" -verbose down
 
 sqlc:
 	sqlc generate
