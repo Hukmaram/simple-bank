@@ -1,5 +1,5 @@
 DB_URL=postgresql://postgres:password@localhost:5432/simple_bank?sslmode=disable
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server mock
 
 # Start PostgreSQL container
 postgres:
@@ -26,5 +26,11 @@ migratedown:
 sqlc:
 	sqlc generate
 
+server:
+		go run main.go
+
 test:
 	go test -v -cover ./...
+
+mock:
+	mockgen -package mockdb -destination db/mock/store.go simplebank/db/sqlc Store
